@@ -2,9 +2,10 @@ name: "Terraform"
 
 on:
   # Uncomment to enable staging deploy from main
-  # push:
-  #   branches:
+   push:
+     branches:
   #     - main
+       - tzahibranch
   release:
     types: [published]
   pull_request:
