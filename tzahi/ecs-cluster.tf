@@ -1,4 +1,4 @@
-# aws_ecs_cluster.stateless:
+## aws_ecs_cluster.stateless:
 resource "aws_ecs_cluster" "stateless" {
     arn      = "arn:aws:ecs:eu-west-1:455178800756:cluster/w1"
     id       = "arn:aws:ecs:eu-west-1:455178800756:cluster/w1"
