@@ -15,15 +15,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        stack:
-          - private26/my/dev/stacks/s3
-          - private26/my/network/stacks/s3
+        include:
+          - stack: private26/my/dev/stacks/s3
+            role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
+          - stack: private26/my/network/stacks/s3
+            role_arn: arn:aws:iam::705061159758:role/gh-actions-tf
     steps:
       - uses: actions/checkout@v4
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::890387921239:role/gh-actions-tf
+          role-to-assume: ${{ matrix.role_arn }}
           aws-region: us-east-1
 
       - uses: hashicorp/setup-terraform@v3
@@ -50,15 +52,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        stack:
-          - private26/my/dev/stacks/s3
-          - private26/my/network/stacks/s3
+        include:
+          - stack: private26/my/dev/stacks/s3
+            role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
+          - stack: private26/my/network/stacks/s3
+            role_arn: arn:aws:iam::705061159758:role/gh-actions-tf
     steps:
       - uses: actions/checkout@v4
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::890387921239:role/gh-actions-tf
+          role-to-assume: ${{ matrix.role_arn }}
           aws-region: us-east-1
 
       - uses: hashicorp/setup-terraform@v3
