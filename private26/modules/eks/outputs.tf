@@ -1,0 +1,19 @@
+output "cluster_endpoint" {
+  description = "The endpoint for your EKS cluster's Kubernetes API server."
+  value       = aws_eks_cluster.main.endpoint
+}
+
+output "cluster_ca_certificate" {
+  description = "The base64 encoded certificate data required to communicate with your cluster."
+  value       = aws_eks_cluster.main.certificate_authority[0].data
+}
+
+output "cluster_name" {
+  description = "The name of the EKS cluster."
+  value       = aws_eks_cluster.main.name
+}
+
+
+output "cluster_id" {
+  value = aws_eks_cluster.main.id
+}
