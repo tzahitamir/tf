@@ -35,7 +35,7 @@ jobs:
 
       - uses: autero1/action-terragrunt@v3
         with:
-          terragrunt_version: 1.1.0
+          terragrunt-version: 1.1.0
 
       - name: Terragrunt Format Check
         working-directory: ${{ matrix.stack }}
@@ -76,7 +76,7 @@ jobs:
 
       - uses: autero1/action-terragrunt@v3
         with:
-          terragrunt_version: 1.1.0
+          terragrunt-version: 1.1.0
 
       - name: Terragrunt Init
         working-directory: ${{ matrix.stack }}
