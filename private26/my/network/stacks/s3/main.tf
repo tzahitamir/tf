@@ -8,20 +8,20 @@ terraform {
   }
 }
 
-variable "buckets" {
-  description = "Map of S3 buckets to create."
-  type        = any
-}
+# variable "buckets" {
+#   description = "Map of S3 buckets to create."
+#   type        = any
+# }
 
-variable "extra_tags" {
-  description = "Additional tags to apply to all buckets."
-  type        = map(string)
-  default     = {}
-}
+# variable "extra_tags" {
+#   description = "Additional tags to apply to all buckets."
+#   type        = map(string)
+#   default     = {}
+# }
 
-module "aws_s3" {
-  source = "../../../../modules/aws_s3"
+# module "aws_s3" {
+#   source = "../../../../modules/aws_s3"
 
-  buckets    = var.buckets
-  extra_tags = var.extra_tags
-}
+#   buckets    = var.buckets
+#   extra_tags = var.extra_tags
+# }
