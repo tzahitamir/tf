@@ -1,0 +1,22 @@
+include "root" {
+  path = find_in_parent_folders("root.hcl")
+}
+
+terraform {
+  source = "../../../../modules/aws_s3"
+}
+
+inputs = {
+  buckets = {
+    example = {
+      name             = "tzahitamir-s3-terragrunt-network"
+      logical_resource = "s3_network_my_example"
+      environment      = "network"
+      created_at       = "2026-07-13"
+    }
+  }
+
+  extra_tags = {
+    owner = "my-devops"
+  }
+}

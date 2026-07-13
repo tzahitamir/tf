@@ -1,0 +1,87 @@
+name: "Terragrunt (my)"
+
+on:
+  push:
+    paths:
+      - "private26/myterragrunt/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - stack: private26/myterragrunt/dev/stacks/s3
+            role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
+          - stack: private26/myterragrunt/network/stacks/s3
+            role_arn: arn:aws:iam::705061159758:role/gh-actions-tf
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ matrix.role_arn }}
+          aws-region: us-east-1
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+          terraform_wrapper: false
+
+      - uses: autero1/action-terragrunt@v3
+        with:
+          terragrunt_version: 1.1.0
+
+      - name: Terragrunt Format Check
+        working-directory: ${{ matrix.stack }}
+        run: terragrunt hcl format --check
+
+      - name: Terragrunt Init
+        working-directory: ${{ matrix.stack }}
+        run: terragrunt init -input=false
+
+      - name: Terragrunt Plan
+        working-directory: ${{ matrix.stack }}
+        run: terragrunt plan -no-color -input=false
+
+  apply:
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: production
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - stack: private26/myterragrunt/dev/stacks/s3
+            role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
+          - stack: private26/myterragrunt/network/stacks/s3
+            role_arn: arn:aws:iam::705061159758:role/gh-actions-tf
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ matrix.role_arn }}
+          aws-region: us-east-1
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+          terraform_wrapper: false
+
+      - uses: autero1/action-terragrunt@v3
+        with:
+          terragrunt_version: 1.1.0
+
+      - name: Terragrunt Init
+        working-directory: ${{ matrix.stack }}
+        run: terragrunt init -input=false
+
+      - name: Terragrunt Apply
+        working-directory: ${{ matrix.stack }}
+        run: terragrunt apply -auto-approve -input=false
