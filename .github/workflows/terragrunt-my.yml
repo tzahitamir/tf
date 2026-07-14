@@ -20,6 +20,9 @@ jobs:
             role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
           - stack: private26/myterragrunt/network/stacks/s3
             role_arn: arn:aws:iam::705061159758:role/gh-actions-tf
+          - stack: private26/myterragrunt/dev/stacks/sg
+            role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
+
     steps:
       - uses: actions/checkout@v4
 
@@ -61,6 +64,8 @@ jobs:
             role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
           - stack: private26/myterragrunt/network/stacks/s3
             role_arn: arn:aws:iam::705061159758:role/gh-actions-tf
+          - stack: private26/myterragrunt/dev/stacks/sg
+            role_arn: arn:aws:iam::890387921239:role/gh-actions-tf
     steps:
       - uses: actions/checkout@v4
 
