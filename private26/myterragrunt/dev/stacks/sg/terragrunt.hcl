@@ -45,8 +45,11 @@ inputs = {
       ]
 
       tags = {
-        Name  = "s3-file-test-sg"
-        owner = "my-devops"
+        Name       = "s3-file-test-sg"
+        owner      = "my-devops"
+        project    = "prj-1"
+        env        = "devops-test"
+        created_at = "2026-07-14"
       }
     }
 
@@ -73,8 +76,9 @@ inputs = {
       ]
 
       tags = {
-        Name  = "allow traffic from lambda-source-sg"
-        owner = "my-devops"
+        Name       = "allow traffic from lambda-source-sg"
+        owner      = "my-devops"
+        created_at = "2026-07-14"
       }
     }
   }

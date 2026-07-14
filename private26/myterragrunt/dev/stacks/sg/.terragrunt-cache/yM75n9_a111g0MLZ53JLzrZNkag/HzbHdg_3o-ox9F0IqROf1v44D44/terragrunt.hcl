@@ -47,6 +47,7 @@ inputs = {
       tags = {
         Name  = "s3-file-test-sg"
         owner = "my-devops"
+        project = "prj-1"
       }
     }
 
