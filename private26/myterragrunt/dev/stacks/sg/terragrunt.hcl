@@ -81,5 +81,40 @@ inputs = {
         created_at = "2026-07-14"
       }
     }
+
+    ollama_sg = {
+      name        = "ollama_sg"
+      description = "Allows HTTP from 172.16.0.0/16 and SSH from my IP, outbound to all destinations"
+
+      ingress_rules = [
+        {
+          from_port   = 80
+          to_port     = 80
+          protocol    = "tcp"
+          cidr_blocks = ["172.16.0.0/16"]
+        },
+        {
+          from_port   = 22
+          to_port     = 22
+          protocol    = "tcp"
+          cidr_blocks = ["147.235.195.114/32"]
+        }
+      ]
+
+      egress_rules = [
+        {
+          from_port   = 0
+          to_port     = 0
+          protocol    = "-1"
+          cidr_blocks = ["0.0.0.0/0"]
+        }
+      ]
+
+      tags = {
+        Name       = "ollama_sg"
+        owner      = "my-devops"
+        created_at = "2026-07-14"
+      }
+    }
   }
 }

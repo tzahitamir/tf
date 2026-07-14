@@ -9,7 +9,7 @@ terraform {
 inputs = {
   buckets = {
     example = {
-      name             = "my-dev-example"
+      name             = "tzahitamir-s3-terragrunt-dev"
       logical_resource = "s3_dev_my_example"
       environment      = "dev"
       created_at       = "2026-07-13"
