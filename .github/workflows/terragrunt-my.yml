@@ -52,6 +52,22 @@ jobs:
         working-directory: ${{ matrix.stack }}
         run: terragrunt plan -no-color -input=false
 
+      - name: Setup Infracost
+        uses: infracost/actions/setup@v3
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: Infracost Breakdown
+        working-directory: ${{ matrix.stack }}
+        run: |
+          infracost breakdown --path=. --format=table | tee infracost.txt
+          {
+            echo "### Infracost: ${{ matrix.stack }}"
+            echo '```'
+            cat infracost.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
   apply:
     needs: plan
     runs-on: ubuntu-latest
