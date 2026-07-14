@@ -88,10 +88,16 @@ inputs = {
 
       ingress_rules = [
         {
-          from_port   = 80
-          to_port     = 80
+          from_port   = 11434
+          to_port     = 11434
           protocol    = "tcp"
           cidr_blocks = ["172.16.0.0/16"]
+        },
+        {
+          from_port   = 11434
+          to_port     = 11434
+          protocol    = "tcp"
+          cidr_blocks = ["147.235.195.114/32"]
         },
         {
           from_port   = 22
