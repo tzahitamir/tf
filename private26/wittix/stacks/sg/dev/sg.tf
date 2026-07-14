@@ -21,21 +21,12 @@
 
 
 module "sg" {
- for_each = var.security_groups
-
- source        = "../../../../modules/sg"
- name          = each.value.name
- description   = each.value.description
- vpc_id        = var.vpc_id
- ingress_rules = each.value.ingress_rules
- egress_rules  = each.value.egress_rules
- tags          = each.value.tags
+  source          = "../../../../modules/sg"
+  vpc_id          = var.vpc_id
+  security_groups = var.security_groups
 }
 
 
 output "security_group_ids" {
-  value = {
-    for sg_key, sg_module in module.sg :
-    sg_key => sg_module.security_group_id
-  } 
+  value = module.sg.security_group_ids
 }
