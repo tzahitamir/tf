@@ -32,6 +32,12 @@ inputs = {
           to_port     = 22
           protocol    = "tcp"
           cidr_blocks = ["147.235.195.114/32"]
+        },
+        {
+          from_port                 = 11434
+          to_port                   = 11434
+          protocol                  = "tcp"
+          source_security_group_ids = ["sg-0fc6791030ce2df3c"]
         }
       ]
 
