@@ -20,7 +20,7 @@ terraform {
 inputs = {
   functions = {
     ai_router = {
-      function_name         = "ai-router"
+      function_name         = "my-ai-router"
       role_arn              = dependency.iam.outputs.iam_roles_arns["ai-router-lambda-role"]
       handler               = "index.handler"
       runtime               = "python3.12"
