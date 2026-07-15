@@ -7,7 +7,8 @@ variable "functions" {
     runtime                = optional(string, "python3.12")
     timeout                = optional(number, 3)
     memory_size            = optional(number, 128)
-    environment_variables  = optional(map(string), {})
-    tags                   = map(string)
+    environment_variables     = optional(map(string), {})
+    ssm_environment_variables = optional(map(string), {}) # env var name => SSM SecureString parameter name
+    tags                      = map(string)
   }))
 }
