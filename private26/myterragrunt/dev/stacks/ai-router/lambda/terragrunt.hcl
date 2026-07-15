@@ -24,7 +24,7 @@ inputs = {
       role_arn              = dependency.iam.outputs.iam_roles_arns["ai-router-lambda-role"]
       handler               = "index.handler"
       runtime               = "python3.12"
-      timeout               = 10
+      timeout               = 29
       memory_size           = 256
       environment_variables = { OLLAMA_URL = "http://100.53.53.59:11434/api/generate" }
       ssm_environment_variables = {
