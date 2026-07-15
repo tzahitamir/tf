@@ -53,7 +53,7 @@ inputs = {
 
     ai_router_lambda_sg = {
       name        = "ai-router-lambda-sg"
-      description = "Security group for the ai-router Lambda function's VPC ENI"
+      description = "Security group for the ai-router Lambda function VPC ENI"
 
       ingress_rules = []
 
@@ -74,3 +74,4 @@ inputs = {
     }
   }
 }
+#
