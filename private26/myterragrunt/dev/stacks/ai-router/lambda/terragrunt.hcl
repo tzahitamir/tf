@@ -27,6 +27,9 @@ inputs = {
       timeout               = 10
       memory_size           = 256
       environment_variables = { OLLAMA_URL = "http://100.53.53.59:11434/api/generate" }
+      ssm_environment_variables = {
+        API_SHARED_SECRET = "/ai-router/api-shared-secret"
+      }
       tags = {
         Name       = "ai-router"
         owner      = "my-devops"
