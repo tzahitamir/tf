@@ -46,6 +46,14 @@ resource "aws_lambda_function" "this" {
     }
   }
 
+  dynamic "vpc_config" {
+    for_each = length(each.value.vpc_subnet_ids) > 0 ? [1] : []
+    content {
+      subnet_ids         = each.value.vpc_subnet_ids
+      security_group_ids = each.value.vpc_security_group_ids
+    }
+  }
+
   tags = each.value.tags
 
   lifecycle {

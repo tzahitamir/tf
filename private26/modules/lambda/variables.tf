@@ -9,6 +9,8 @@ variable "functions" {
     memory_size            = optional(number, 128)
     environment_variables     = optional(map(string), {})
     ssm_environment_variables = optional(map(string), {}) # env var name => SSM SecureString parameter name
+    vpc_subnet_ids            = optional(list(string), [])
+    vpc_security_group_ids    = optional(list(string), [])
     tags                      = map(string)
   }))
 }

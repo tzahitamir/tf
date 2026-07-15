@@ -3,7 +3,7 @@ include "root" {
 }
 
 dependency "sg" {
-  config_path = "../sg"
+  config_path = "../ai-router/sg"
 
   mock_outputs = {
     security_group_ids = {

@@ -13,6 +13,17 @@ dependency "iam" {
   mock_outputs_allowed_terraform_commands = ["plan"]
 }
 
+dependency "sg" {
+  config_path = "../sg"
+
+  mock_outputs = {
+    security_group_ids = {
+      ai_router_lambda_sg = "sg-00000000000000000"
+    }
+  }
+  mock_outputs_allowed_terraform_commands = ["plan"]
+}
+
 terraform {
   source = "../../../../../modules/lambda"
 }
@@ -30,6 +41,8 @@ inputs = {
       ssm_environment_variables = {
         API_SHARED_SECRET = "/ai-router/api-shared-secret"
       }
+      vpc_subnet_ids         = ["subnet-0e0b3200d979d2240"]
+      vpc_security_group_ids = [dependency.sg.outputs.security_group_ids["ai_router_lambda_sg"]]
       tags = {
         Name       = "ai-router"
         owner      = "my-devops"
