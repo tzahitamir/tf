@@ -27,6 +27,19 @@ inputs = {
         "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
         "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
       ]
+
+      inline_policies = {
+        read-postgres-core-secret = jsonencode({
+          Version = "2012-10-17"
+          Statement = [
+            {
+              Effect   = "Allow"
+              Action   = "secretsmanager:GetSecretValue"
+              Resource = "arn:aws:secretsmanager:us-east-1:890387921239:secret:/core/postgres-core-credentials-*"
+            }
+          ]
+        })
+      }
     }
   }
 }

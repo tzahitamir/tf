@@ -11,6 +11,13 @@ locals {
       "${fn_key}.${env_key}" => param_name
     }
   ]...)
+
+  secretsmanager_lookups = merge([
+    for fn_key, fn in var.functions : {
+      for env_key, secret_id in fn.secretsmanager_environment_variables :
+      "${fn_key}.${env_key}" => secret_id
+    }
+  ]...)
 }
 
 data "aws_ssm_parameter" "env" {
@@ -18,6 +25,12 @@ data "aws_ssm_parameter" "env" {
 
   name            = each.value
   with_decryption = true
+}
+
+data "aws_secretsmanager_secret_version" "env" {
+  for_each = local.secretsmanager_lookups
+
+  secret_id = each.value
 }
 
 resource "aws_lambda_function" "this" {
@@ -34,13 +47,17 @@ resource "aws_lambda_function" "this" {
   source_code_hash = data.archive_file.placeholder.output_base64sha256
 
   dynamic "environment" {
-    for_each = length(each.value.environment_variables) > 0 || length(each.value.ssm_environment_variables) > 0 ? [1] : []
+    for_each = length(each.value.environment_variables) > 0 || length(each.value.ssm_environment_variables) > 0 || length(each.value.secretsmanager_environment_variables) > 0 ? [1] : []
     content {
       variables = merge(
         each.value.environment_variables,
         {
           for env_key, param_name in each.value.ssm_environment_variables :
           env_key => data.aws_ssm_parameter.env["${each.key}.${env_key}"].value
+        },
+        {
+          for env_key, secret_id in each.value.secretsmanager_environment_variables :
+          env_key => data.aws_secretsmanager_secret_version.env["${each.key}.${env_key}"].secret_string
         }
       )
     }

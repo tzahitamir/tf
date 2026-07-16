@@ -4,9 +4,10 @@
 variable "iam_roles" {
   description = "Map of IAM roles"
   type        = map(object({
-    name                 = string
-    policy_json          = string
-    managed_policy_arns  = optional(list(string), [])
+    name                = string
+    policy_json         = string
+    managed_policy_arns = optional(list(string), [])
+    inline_policies     = optional(map(string), {}) # policy name => policy JSON document
   }))
 }
 

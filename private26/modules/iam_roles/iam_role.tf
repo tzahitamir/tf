@@ -23,4 +23,23 @@ resource "aws_iam_role_policy_attachment" "managed" {
   policy_arn = each.value.policy_arn
 }
 
+resource "aws_iam_role_policy" "inline" {
+  for_each = {
+    for pair in flatten([
+      for role_key, role in var.iam_roles : [
+        for policy_name, policy_json in role.inline_policies : {
+          key         = "${role_key}_${policy_name}"
+          role        = role_key
+          policy_name = policy_name
+          policy_json = policy_json
+        }
+      ]
+    ]) : pair.key => pair
+  }
+
+  name   = each.value.policy_name
+  role   = aws_iam_role.myroles[each.value.role].name
+  policy = each.value.policy_json
+}
+
 
