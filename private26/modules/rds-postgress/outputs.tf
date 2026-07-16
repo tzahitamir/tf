@@ -1,11 +1,11 @@
 output "endpoint" {
-  value = aws_db_instance.this.endpoint
+  value = var.create ? aws_db_instance.this[0].endpoint : null
 }
 
 output "secret_name" {
-  value = aws_secretsmanager_secret.this.name
+  value = var.create ? aws_secretsmanager_secret.this[0].name : null
 }
 
 output "secret_arn" {
-  value = aws_secretsmanager_secret.this.arn
+  value = var.create ? aws_secretsmanager_secret.this[0].arn : null
 }

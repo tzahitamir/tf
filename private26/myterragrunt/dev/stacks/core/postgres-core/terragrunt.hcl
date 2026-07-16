@@ -18,9 +18,9 @@ terraform {
 }
 
 inputs = {
-  create = false
+  create = true
 
-  identifier = "core-rag-postgres"
+  identifier = "postgres-core"
 
   engine                 = "postgres"
   engine_version         = "16"
@@ -29,10 +29,10 @@ inputs = {
   instance_class    = "db.t4g.micro"
   allocated_storage = 20
 
-  db_name  = "ragdb"
-  username = "raguser"
+  db_name  = "postgres"
+  username = "postgres"
 
-  secret_name = "/core/rds-postgres-credentials"
+  secret_name = "/core/postgres-core-credentials"
 
   subnet_ids = [
     "subnet-0e0b3200d979d2240",
@@ -48,7 +48,7 @@ inputs = {
   skip_final_snapshot     = true
 
   tags = {
-    Name       = "core-rag-postgres"
+    Name       = "postgres-core"
     owner      = "my-devops"
     created_at = "2026-07-16"
   }

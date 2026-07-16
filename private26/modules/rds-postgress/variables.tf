@@ -1,3 +1,9 @@
+variable "create" {
+  type        = bool
+  default     = true
+  description = "Whether to create the RDS instance and its supporting resources. Set to false to destroy them via a normal apply, without running terraform destroy."
+}
+
 variable "identifier" {
   type        = string
   description = "RDS instance identifier"
