@@ -8,6 +8,7 @@ dependency "ai_router_sg" {
   mock_outputs = {
     security_group_ids = {
       ai_router_lambda_sg = "sg-00000000000000000"
+      ollama_sg           = "sg-00000000000000001"
     }
   }
   mock_outputs_allowed_terraform_commands = ["plan"]
@@ -99,10 +100,13 @@ inputs = {
 
       ingress_rules = [
         {
-          from_port                 = 5432
-          to_port                   = 5432
-          protocol                  = "tcp"
-          source_security_group_ids = [dependency.ai_router_sg.outputs.security_group_ids["ai_router_lambda_sg"]]
+          from_port = 5432
+          to_port   = 5432
+          protocol  = "tcp"
+          source_security_group_ids = [
+            dependency.ai_router_sg.outputs.security_group_ids["ai_router_lambda_sg"],
+            dependency.ai_router_sg.outputs.security_group_ids["ollama_sg"]
+          ]
         }
       ]
 
