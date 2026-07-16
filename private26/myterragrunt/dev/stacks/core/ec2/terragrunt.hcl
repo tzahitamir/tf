@@ -3,7 +3,7 @@ include "root" {
 }
 
 dependency "sg" {
-  config_path = "../ai-router/sg"
+  config_path = "../../ai-router/sg"
 
   mock_outputs = {
     security_group_ids = {
@@ -14,7 +14,7 @@ dependency "sg" {
 }
 
 terraform {
-  source = "../../../../modules/ec2"
+  source = "../../../../../modules/ec2"
 }
 
 inputs = {
