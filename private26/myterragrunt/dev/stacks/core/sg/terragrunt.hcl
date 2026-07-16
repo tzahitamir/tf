@@ -2,6 +2,17 @@ include "root" {
   path = find_in_parent_folders("root.hcl")
 }
 
+dependency "ai_router_sg" {
+  config_path = "../../ai-router/sg"
+
+  mock_outputs = {
+    security_group_ids = {
+      ai_router_lambda_sg = "sg-00000000000000000"
+    }
+  }
+  mock_outputs_allowed_terraform_commands = ["plan"]
+}
+
 terraform {
   source = "../../../../../modules/sg"
 }
@@ -79,6 +90,35 @@ inputs = {
         Name       = "allow traffic from lambda-source-sg"
         owner      = "my-devops"
         created_at = "2026-07-14"
+      }
+    }
+
+    rds_sg = {
+      name        = "core-rds-postgres-sg"
+      description = "Allows Postgres access from services in the VPC, outbound to all destinations"
+
+      ingress_rules = [
+        {
+          from_port                 = 5432
+          to_port                   = 5432
+          protocol                  = "tcp"
+          source_security_group_ids = [dependency.ai_router_sg.outputs.security_group_ids["ai_router_lambda_sg"]]
+        }
+      ]
+
+      egress_rules = [
+        {
+          from_port   = 0
+          to_port     = 0
+          protocol    = "-1"
+          cidr_blocks = ["0.0.0.0/0"]
+        }
+      ]
+
+      tags = {
+        Name       = "core-rds-postgres-sg"
+        owner      = "my-devops"
+        created_at = "2026-07-16"
       }
     }
   }
