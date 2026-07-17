@@ -17,3 +17,13 @@ output "cluster_name" {
 output "cluster_id" {
   value = aws_eks_cluster.main.id
 }
+
+output "oidc_provider_arn" {
+  description = "ARN of the cluster's IAM OIDC identity provider, for IRSA role trust policies."
+  value       = aws_iam_openid_connect_provider.this.arn
+}
+
+output "oidc_provider_url" {
+  description = "URL of the cluster's IAM OIDC identity provider (without the https:// prefix), for IRSA role trust policies."
+  value       = aws_iam_openid_connect_provider.this.url
+}
