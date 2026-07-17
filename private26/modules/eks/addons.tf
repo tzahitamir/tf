@@ -26,5 +26,5 @@ resource "aws_eks_addon" "this" {
     null
   )
 
-  depends_on = [aws_eks_cluster.main]
+  depends_on = [aws_eks_cluster.main, aws_eks_node_group.ng]
 }
